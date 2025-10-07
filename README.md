@@ -78,9 +78,9 @@ The web application provides:
 * **Sentiment Insights:** Displays aggregated sentiment from user reviews.
 
 **Architecture:**
-    * Python (Flask) backend.
-    * HTML/CSS/JS frontend for interaction.
-    * Integration with TMDB API for dynamic data retrieval.
+* Python (Flask) backend.
+* HTML/CSS/JS frontend for interaction.
+* Integration with TMDB API for dynamic data retrieval.
 
 ---
 
@@ -136,7 +136,7 @@ To ensure robustness and generalization, the model was also tested using the TMD
 - [El Alami Nihad](https://github.com/nihadel7) 
 
 
-## ✨ Happy Coding & Movie Hunting 🎬 !!
+## ✨ Happy Coding & Movie Hunting 🎬 !
 
 
 
