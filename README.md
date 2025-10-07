@@ -1,34 +1,18 @@
-# 🎬 Movie Recommendation System  
+# 🎬 Movie Recommendation System 
 
-A **movie recommendation system** built with **Flask** that combines **collaborative filtering** and **NLP-based sentiment analysis** to provide personalized film suggestions.  
-The project includes both the **backend logic** (Flask, machine learning models) and a **web interface** (HTML/CSS/JS).  
+## Project Overview
+This application is designed to personalize the cinematic experience for users. It leverages machine learning, content-based filtering, and sentiment analysis to suggest movies tailored to individual preferences. By integrating diverse datasets and APIs, the project delivers accurate, data-driven recommendations while providing users with an intuitive and interactive interface.
 
----
 
-## Project Goals  
-- Build a recommendation engine that suggests movies similar to the ones a user likes.  
-- Use **text features** and **similarity metrics** to enhance recommendations.  
-- Provide an easy-to-use **web interface** for interaction.  
+## Project Objectives
+The project aims to:
+* Provide personalized movie recommendations based on user interests.
+* Improve user engagement and satisfaction through intelligent suggestions.
+* Implement and compare Content-Based Filtering and Collaborative Filtering models.
+* Visualize movie data insights using Python.
+* Build an interactive application with a user-friendly interface.
+ 
 
----
-
-## Features  
-Movie search with autocomplete functionality.  
-Top-10 personalized recommendations using collaborative filtering.  
-Sentiment analysis of reviews (via pre-trained NLP models).  
-Interactive web app built with Flask, HTML, CSS, and JavaScript.  
-
----
-
-## Tech Stack  
-- **Programming Language**: Python  
-- **Framework**: Flask  
-- **Machine Learning**: scikit-learn, pickle (saved models)  
-- **Data Handling**: Pandas, NumPy  
-- **Frontend**: HTML, CSS, JavaScript  
-- **Notebooks**: Jupyter (for preprocessing, collaborative filtering, sentiment analysis, visualization)  
-
----
 ## Sources of the Datasets
 1. [IMDB 5000 Movie Dataset](https://www.kaggle.com/datasets/carolzhangdc/imdb-5000-movie-dataset)  
 2. [The Movies Dataset](https://www.kaggle.com/datasets/rounakbanik/the-movies-dataset)  
@@ -41,80 +25,87 @@ Interactive web app built with Flask, HTML, CSS, and JavaScript.
 9. [List of American Films of 2023](https://en.wikipedia.org/wiki/List_of_American_films_of_2023)  
 10. [List of American Films of 2024](https://en.wikipedia.org/wiki/List_of_American_films_of_2024)
 
----
-# Methodology
+
+# Project Architecture
 
 ## 1. Data Preparation
+* **Datasets used:**
+    * movie_metadata.csv, credits.csv, movies_metadata.csv from Kaggle.
 
-### Multi-Dataset Collection and Integration
-- **Data Aggregation**: Combined multiple datasets including `movie_metadata`, `credits`, and `movies_metadata` from Kaggle
-- **Comprehensive Coverage**: Integrated diverse data sources to ensure robust and complete movie information
-- **Cross-Referencing**: Established relationships between different data tables for comprehensive analysis
+    * Additional movie data (2016–2024) collected from Wikipedia via Web Scraping.
 
-### Web Scraping for Recent Films
-- **Wikipedia Integration**: Automated extraction of movie titles from Wikipedia pages for years 2016-2024
-- **Dynamic Data Collection**: Implemented scraping scripts to gather up-to-date film information
-- **Structured Parsing**: Converted unstructured web data into structured format for analysis
+    * API enrichment from TMDb (The Movie Database) to retrieve missing information (genre, actors, directors).
 
-### TMDB API Enrichment
-- **Data Augmentation**: Used The Movie Database API to fill missing information
-- **Function Development**: Created specialized functions (`get_genre`, `get_director`, `get_actor`) to extract specific movie attributes
-- **Real-time Data Access**: Leveraged API capabilities to access current and comprehensive movie data
+* **Preprocessing steps:**
+    * Data cleaning and normalization.
+    * Feature extraction (genres, runtime, ratings, votes).
+    * Integration and merging of multiple datasets for consistency.
 
-### Data Cleaning and Preprocessing
-- **Normalization**: Standardized data formats across all datasets
-- **Missing Value Handling**: Implemented strategies to address incomplete or missing data
-- **Feature Engineering**: Created combined features (e.g., 'comb' column) to enhance recommendation quality
-- **Data Validation**: Ensured data consistency and accuracy throughout the pipeline
+## 2. Data Visualization
+Comprehensive visualizations were performed to understand the dataset and extract insights, including:
+* Top 10 directors, genres, and actors.
+* Movie rating distributions.
+* Average ratings by year.
+* Evolution of movie production over time.
+These analyses guided the selection of relevant features for model building.
 
-## 2. Recommendation Model
+## 3. Machine Learning Models
+* **Content-Based Filtering**
+    This approach recommends movies similar to those the user already liked by analyzing movie attributes such as genre, cast, and keywords.
 
-### Content-Based Approach Selection
-- **Comparative Analysis**: Evaluated both collaborative filtering and content-based approaches
-- **Performance Optimization**: Selected content-based method due to superior performance metrics
-- **Cold Start Solution**: Addressed new user and new movie challenges effectively
+    * **Technique used:** TF-IDF Vectorization and Cosine Similarity.
+    * **Output:** A ranked list of the top 10 similar movies.
 
-### Cosine Similarity Matrix
-- **Vectorization**: Used CountVectorizer to convert movie features into numerical vectors
-- **Similarity Computation**: Implemented cosine similarity to measure movie-to-movie relationships
-- **Matrix Construction**: Built comprehensive similarity matrix covering all movies in the dataset
+* **Collaborative Filtering (Comparative Model)**
+    Recommendations are generated based on the preferences of users with similar tastes.
+    * Implemented with a user–item matrix.
+    * Similarity computed using Cosine and Jaccard measures.
+    * Compared with the content-based model; however, due to missing user IDs and limited data, the collaborative model showed lower performance.
 
-### Feature Combination Strategy
-- **Multi-dimensional Features**: Combined genre, director, actors, and other metadata
-- **Feature Weighting**: Applied appropriate weights to different feature types based on importance
-- **Text Processing**: Processed combined features to create meaningful movie representations
+## 4. Sentiment Analysis
+Sentiment analysis was integrated to analyze user reviews and improve recommendation accuracy.
+* **Tool:** NLTK (Natural Language Toolkit).
+* **Method:** TF-IDF + Multinomial Naïve Bayes Classifier.
+* **Accuracy:** 97–98%.
+* **Purpose:** Evaluate whether reviews are positive, negative, or neutral to better weight recommendations.
 
-### Recommendation Function
-- **Top-N Selection**: Returns 10 most similar movies for any given input film
-- **Error Handling**: Includes robust error management for movies not found in database
-- **Case Insensitivity**: Processes user input with case normalization for better matching
-- **Duplicate Prevention**: Excludes the input movie itself from recommendations
+## 5. Application Development
+The web application provides:
+* **Search & Auto-complete:** Users can search for movies easily.
+* **Movie Details Page:** Displays title, rating, duration, genres, cast, and synopsis.
+* Actor Details: Additional info about actors.
+* **Recommendation Page:** Suggests similar movies based on the selected one.
+* **Sentiment Insights:** Displays aggregated sentiment from user reviews.
 
-## 3. Sentiment Analysis
-
-### User Review Classification
-- **Review Processing**: Analyzed user comments and reviews from multiple sources
-- **Sentiment Categorization**: Classified reviews into positive, negative, or neutral sentiments
-- **Real-time Analysis**: Implemented live sentiment analysis for user-generated content
-
-### Naïve Bayes Implementation
-- **High Accuracy**: Achieved 98.77% accuracy in sentiment classification
-- **Model Training**: Used multinomial Naïve Bayes classifier for text classification
-- **Performance Validation**: Tested model on separate datasets to ensure generalizability
-
-### TF-IDF Feature Extraction
-- **Text Vectorization**: Applied Term Frequency-Inverse Document Frequency for text processing
-- **Feature Importance**: Weighted terms based on their importance in distinguishing sentiments
-- **Dimensionality Reduction**: Focused on most relevant features for efficient classification
-- **Vocabulary Optimization**: Built comprehensive vocabulary from movie review corpus
-
-### Model Integration
-- **Pickle Serialization**: Saved trained models and transformers for efficient deployment
-- **Real-time Processing**: Enabled immediate sentiment analysis for user interactions
-- **Scalable Architecture**: Designed system to handle increasing volumes of user reviews
+**Architecture:**
+    * Python (Flask) backend.
+    * HTML/CSS/JS frontend for interaction.
+    * Integration with TMDB API for dynamic data retrieval.
 
 ---
-## Screenshots
+
+## Technologies Used
+| Category                    | Tools / Libraries                      |
+| --------------------------- | -------------------------------------- |
+| **Data Collection**         | Web Scraping (BeautifulSoup), TMDB API |
+| **Data Processing**         | Pandas, NumPy, **pickle**              |
+| **Visualization**           | Matplotlib, Seaborn                    |
+| **Machine Learning**        | Scikit-learn, NLTK                     |
+| **Application Development** | Flask, HTML, CSS, JavaScript           |
+| **Dataset Sources**         | Kaggle, Wikipedia, TMDB                |
+
+
+## Testing with Multiple Datasets
+To ensure robustness and generalization, the model was also tested using the TMDB 5000 Movies Dataset. The content-based model maintained high accuracy and consistent performance across datasets, validating its reliability.
+
+## Results and Insights
+
+* **Model Accuracy (Sentiment Analysis):** ~98.7%
+* **Content-Based Model:** Performed best for personalized movie suggestions.
+* **Collaborative Model:** Less accurate due to lack of user-specific data.
+
+
+## Application Interface in Pictures
 
 **Home Page of the Application**  
 ![Home Page](static/screenshots/Home%20Page.png)
@@ -137,15 +128,15 @@ Interactive web app built with Flask, HTML, CSS, and JavaScript.
 **Recommendation Result**  
 ![Recommendation Result](static/screenshots/Recommendation%20Result.png)
 
----
+
 ## Contributors
-- [Bnyiche Mouna](https://github.com/itsmawna) 
 - [Ahnin Chaimaa](https://github.com/chaimaa-101) 
+- [Bnyiche Mouna](https://github.com/itsmawna) 
 - [Eddaoudy Aya](https://github.com/EddaoudyAya) 
 - [El Alami Nihad](https://github.com/nihadel7) 
 
----
-## Have Fun!
 
-Have fun trying it out! Feel free to reach out if you have any questions, suggestions, or just want to chat about the project. 
+## ✨ Happy Coding & Movie Hunting 🎬 !!
+
+
 
